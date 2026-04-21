@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Did You Mean?</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 13px;
+      color: #1a1a1a;
+      background: #fff;
+      width: 320px;
+      min-height: 200px;
+    }
+
+    .header {
+      background: #2c2c2c;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-icon {
+      width: 22px;
+      height: 22px;
+      background: #4a90d9;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .header-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: #fff;
+    }
+
+    .header-version {
+      margin-left: auto;
+      font-size: 11px;
+      color: #888;
+    }
+
+    .body {
+      padding: 14px;
+    }
+
+    .tagline {
+      font-size: 11px;
+      color: #666;
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+
+    .col-labels {
+      display: grid;
+      grid-template-columns: 1fr 1fr 28px;
+      gap: 6px;
+      margin-bottom: 6px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .col-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    #trap-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-bottom: 10px;
+      min-height: 10px;
+    }
+
+    .trap-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 28px;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .trap-row input {
+      font-size: 12px;
+      padding: 5px 7px;
+      height: 28px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      color: #1a1a1a;
+      background: #fafafa;
+      width: 100%;
+    }
+
+    .trap-row input:focus {
+      outline: none;
+      border-color: #4a90d9;
+      background: #fff;
+    }
+
+    .btn-delete {
+      height: 28px;
+      width: 28px;
+      padding: 0;
+      border: 1px solid #f0c0c0;
+      border-radius: 5px;
+      background: #fff8f8;
+      color: #c0392b;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .btn-delete:hover {
+      background: #fde8e8;
+      border-color: #c0392b;
+    }
+
+    .add-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 28px;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .add-row input {
+      font-size: 12px;
+      padding: 5px 7px;
+      height: 28px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      color: #1a1a1a;
+      width: 100%;
+    }
+
+    .add-row input:focus {
+      outline: none;
+      border-color: #4a90d9;
+    }
+
+    .add-row input::placeholder {
+      color: #bbb;
+    }
+
+    .btn-add {
+      height: 28px;
+      width: 28px;
+      padding: 0;
+      border: 1px solid #4a90d9;
+      border-radius: 5px;
+      background: #eaf2fb;
+      color: #2c6fad;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+
+    .btn-add:hover {
+      background: #d0e8f8;
+    }
+
+    .btn-add:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .limit-msg {
+      display: none;
+      font-size: 11px;
+      color: #92400e;
+      background: #fffbeb;
+      border: 1px solid #fcd34d;
+      border-radius: 5px;
+      padding: 6px 9px;
+      margin-bottom: 10px;
+    }
+
+    .footer {
+      border-top: 1px solid #eee;
+      padding-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .count-label {
+      font-size: 11px;
+      color: #999;
+    }
+
+    .footer-btns {
+      display: flex;
+      gap: 6px;
+    }
+
+    .btn {
+      font-size: 12px;
+      padding: 5px 12px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      background: #fff;
+      color: #333;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #f5f5f5;
+    }
+
+    .btn-save {
+      background: #4a90d9;
+      border-color: #3a7fc1;
+      color: #fff;
+    }
+
+    .btn-save:hover {
+      background: #3a7fc1;
+    }
+
+    .btn-save.saved {
+      background: #27ae60;
+      border-color: #219a52;
+    }
+
+    .toast {
+      display: none;
+      font-size: 11px;
+      color: #155724;
+      background: #d4edda;
+      border: 1px solid #c3e6cb;
+      border-radius: 5px;
+      padding: 6px 9px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-icon">?</div>
+    <span class="header-title">Did You Mean?</span>
+    <span class="header-version">v1.0</span>
+  </div>
+
+  <div class="body">
+    <p class="tagline">Your personal atomic typos — flagged in Gmail before you send. Spell check won't catch these. You will.</p>
+
+    <div class="col-labels">
+      <span class="col-label">I type</span>
+      <span class="col-label">I mean</span>
+      <span></span>
+    </div>
+
+    <div id="trap-rows"></div>
+
+    <div class="add-row">
+      <input type="text" id="new-typo" placeholder="beset" maxlength="60" autocomplete="off" spellcheck="false" />
+      <input type="text" id="new-correct" placeholder="best" maxlength="60" autocomplete="off" spellcheck="false" />
+      <button class="btn-add" id="btn-add" title="Add trap word">+</button>
+    </div>
+
+    <div class="limit-msg" id="limit-msg">Maximum of 8 trap words reached. Remove one to add another.</div>
+    <div class="toast" id="toast">Saved.</div>
+
+    <div class="footer">
+      <span class="count-label" id="count-label">0 of 8 used</span>
+      <div class="footer-btns">
+        <button class="btn" id="btn-reset">Reset</button>
+        <button class="btn btn-save" id="btn-save">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

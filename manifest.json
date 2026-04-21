@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "Did You Mean?",
+  "version": "1.0.0",
+  "description": "Catches Gmail atomic typos spell check misses — real words, wrong context. Set up to 8 trap words, get nudged before you send.",
+  "author": "Jonathan Goldner",
+  "homepage_url": "https://github.com/jtgoldner",
+
+  "icons": {
+    "48": "icons/icon48.png",
+    "96": "icons/icon96.png",
+    "128": "icons/icon128.png"
+  },
+
+  "action": {
+    "default_icon": {
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "Did You Mean?",
+    "default_popup": "popup.html"
+  },
+
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+
+  "host_permissions": [
+    "https://mail.google.com/*"
+  ],
+
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "background": {
+    "service_worker": "background.js"
+  }
+}

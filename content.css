@@ -1,0 +1,90 @@
+/* Did You Mean? — Gmail content styles */
+
+.dym-flagged {
+  background: #fef3c0;
+  border-bottom: 2px solid #d97706;
+  border-radius: 2px;
+  color: inherit;
+  cursor: pointer;
+  padding: 0 1px;
+  position: relative;
+  display: inline;
+}
+
+.dym-flagged:hover {
+  background: #fde68a;
+}
+
+/* Tooltip container */
+.dym-tooltip {
+  position: fixed;
+  z-index: 2147483647;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 10px 14px;
+  min-width: 200px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 13px;
+  color: #1a1a1a;
+  pointer-events: all;
+}
+
+.dym-tooltip-label {
+  font-size: 11px;
+  color: #6b7280;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.dym-tooltip-label strong {
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+.dym-tooltip-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.dym-btn {
+  font-size: 12px;
+  padding: 5px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid #d1d5db;
+  background: #f9fafb;
+  color: #374151;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.dym-btn:hover {
+  background: #f3f4f6;
+}
+
+.dym-btn-accept {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  color: #1d4ed8;
+}
+
+.dym-btn-accept:hover {
+  background: #dbeafe;
+}
+
+/* Arrow caret on tooltip */
+.dym-tooltip::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  background: #ffffff;
+  border-right: 1px solid #d1d5db;
+  border-bottom: 1px solid #d1d5db;
+  transform: translateX(-50%) rotate(45deg);
+}
